@@ -1,16 +1,13 @@
 <component name="libraryTable">
-  <library name="Gradle: androidx.print:print:1.0.0@aar">
-    <ANNOTATIONS>
-      <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/5953c2ca03ed5040b3416d9c117f253e/print-1.0.0/annotations.zip!/" />
-    </ANNOTATIONS>
+  <library name="Gradle: com.squareup.retrofit2:converter-gson:2.9.0">
     <CLASSES>
-      <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/5953c2ca03ed5040b3416d9c117f253e/print-1.0.0/jars/classes.jar!/" />
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/5953c2ca03ed5040b3416d9c117f253e/print-1.0.0/res" />
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/5953c2ca03ed5040b3416d9c117f253e/print-1.0.0/AndroidManifest.xml" />
+      <root url="jar://$PROJECT_DIR$/../.gradle/caches/modules-2/files-2.1/com.squareup.retrofit2/converter-gson/2.9.0/fc93484fc67ab52b1e0ccbdaa3922d8a6678e097/converter-gson-2.9.0.jar!/" />
     </CLASSES>
-    <JAVADOC />
+    <JAVADOC>
+      <root url="jar://$PROJECT_DIR$/../.gradle/caches/modules-2/files-2.1/com.squareup.retrofit2/converter-gson/2.9.0/76a801b6fd4d1bbd0e04cd7c079ae0e3f9c0dbf8/converter-gson-2.9.0-javadoc.jar!/" />
+    </JAVADOC>
     <SOURCES>
-      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/androidx.print/print/1.0.0/71fc2d9acf7cce6b96230c5af263268b1664914a/print-1.0.0-sources.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../.gradle/caches/modules-2/files-2.1/com.squareup.retrofit2/converter-gson/2.9.0/c62a3350a231bd6b678e2cad7f23028777f51e13/converter-gson-2.9.0-sources.jar!/" />
     </SOURCES>
   </library>
 </component>

@@ -44,7 +44,7 @@ import retrofit2.http.POST;
 import retrofit2.http.Query;
 import ru.grande.PSLite.R;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+/*public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     Context context;
   WifiManager wifiManager;
@@ -434,6 +434,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 //        editor.putString("Port", sport);
 //        editor.apply();
 //    }
-}
+}*/
 
 

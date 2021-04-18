@@ -1,10 +1,9 @@
 package ru.grande.PSLite;
 
-import java.util.Date;
-
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
@@ -12,13 +11,16 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.telephony.gsm.SmsManager;
+import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 import androidx.annotation.RequiresApi;
 import androidx.core.app.ActivityCompat;
-import android.telephony.gsm.SmsManager;
-import android.widget.Button;
-import android.widget.Toast;
+
+import java.util.Date;
 
 public class TabSMS extends Activity {
 
@@ -35,10 +37,10 @@ public class TabSMS extends Activity {
     private LocationManager locationManager;
 
     @RequiresApi(api = Build.VERSION_CODES.M)
-    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_two);
+        Context context = null;
         tvEnabledGPS = (TextView) findViewById(R.id.tvEnabledGPS);
         tvStatusGPS = (TextView) findViewById(R.id.tvStatusGPS);
         tvLocationGPS = (TextView) findViewById(R.id.tvLocationGPS);
@@ -56,8 +58,6 @@ public class TabSMS extends Activity {
             public void onClick(View v) {
                 String number = "+79537699596";
                 String sms = smsText;
-
-
 
                 //С помощью SMS менеджера отправляем сообщение и высвечиваем
                 //Toast сообщение об успехе операции:
@@ -82,30 +82,6 @@ public class TabSMS extends Activity {
                 }
             }
         });
-
-//        shareIntent = (Button) findViewById(R.id.sendViaIntent);
-//        //Настраиваем обработку нажатия кнопки "Перейти в SMS":
-//        shareIntent.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//
-//                //С помощью намерения Intent выполняем переход
-//                //в стандартное SMS приложение аппарата:
-//                try {
-//                    Intent sendIntent = new Intent(Intent.ACTION_VIEW);
-//                    //Передаем в него текст сообщения с нашего приложения:
-//                    sendIntent.putExtra("sms_body", messageBody.getText().toString());
-//                    sendIntent.setType("vnd.android-dir/mms-sms");
-//                    startActivity(sendIntent);
-//                }
-//                //В случае неудачи - сообщение об ошибке:
-//                catch (Exception e) {
-//                    Toast.makeText(getApplicationContext(),
-//                            "SMS не отправлено, попытайтесь еще!", Toast.LENGTH_LONG).show();
-//                    e.printStackTrace();
-//                }
-//            }
-//        });
     }
 
 
