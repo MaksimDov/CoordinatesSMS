@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:id="@+id/fragmentOne"
+              tools:context="ru.grande.PSLite.MainActivity" android:orientation="vertical">
+
+    <Button
+            android:id="@+id/Send"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="20dp"
+            android:text="Отправить"
+            android:textAllCaps="false"
+    />
+    <Button
+            android:id="@+id/Get"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="20dp"
+            android:text="Определить"
+            android:textAllCaps="false"
+    />
+    <Button
+            android:id="@+id/Scan"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="20dp"
+            android:text="Обновить"
+            android:textAllCaps="false"
+    />
+    <ListView
+            android:id="@+id/list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="50dp"
+            android:divider="@color/magenta"
+            android:dividerHeight="3dp"
+            android:scrollbarStyle="insideOverlay"
+    />
+</LinearLayout>
