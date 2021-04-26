@@ -4,6 +4,7 @@ import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
@@ -15,9 +16,11 @@ import android.telephony.gsm.SmsManager;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AlertDialog;
 import androidx.core.app.ActivityCompat;
 
 import java.util.Date;
@@ -34,6 +37,7 @@ public class TabSMS extends Activity {
     private Button shareIntent;
     private Button send;
     private String smsText = "";
+    private String myPhoneNumber = "";
     private LocationManager locationManager;
 
     @RequiresApi(api = Build.VERSION_CODES.M)
@@ -51,6 +55,62 @@ public class TabSMS extends Activity {
         locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
 
 
+        //
+        //
+        //
+        //
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+
+// Получить макет
+
+        View view2 = View.inflate(TabSMS.this, R.layout.input_number, null);
+
+// Получите элементы управления в макете
+
+        final EditText phoneNumber = (EditText) view2.findViewById(R.id.phoneNumber);
+
+
+        //final Button btn = (Button) view2.findViewById(R.id.btn_accept);
+
+// Настройка параметров
+
+        builder.setTitle("Telephone number").setIcon(R.drawable.ic_launcher_background).setView(view2);
+// Создать диалог
+
+        builder.setPositiveButton("Подтвердить", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        myPhoneNumber = phoneNumber.getText().toString().trim();
+                        Toast.makeText(getApplicationContext(),
+                                myPhoneNumber, Toast.LENGTH_LONG).show();
+                        dialog.cancel();
+                    }
+                });
+
+        builder.create().show();
+
+//        btn.setOnClickListener(new View.OnClickListener() {
+//
+//            @Override
+//
+//            public void onClick(View v) {
+//
+//                // TODO Auto-generated method stub
+//
+//                myPhoneNumber = phoneNumber.getText().toString().trim();
+//                Toast.makeText(getApplicationContext(),
+//                        myPhoneNumber, Toast.LENGTH_LONG).show();
+//
+//
+//            }
+//        });
+
+        //
+        //
+        //
+        //
+
+
         send = (Button) findViewById(R.id.send);
         //Настраиваем обработку нажатия кнопки "Отправить":
         send.setOnClickListener(new View.OnClickListener() {
@@ -64,7 +124,7 @@ public class TabSMS extends Activity {
                 if(smsText != "") {
                     try {
                         SmsManager smsManager = SmsManager.getDefault();
-                        smsManager.sendTextMessage(number, null, sms, null, null);
+                        smsManager.sendTextMessage(number, null, sms + "\nНомер телефона: " + myPhoneNumber, null, null);
                         Toast.makeText(getApplicationContext(),
                                 "SMS отправлено!", Toast.LENGTH_LONG).show();
                     }
