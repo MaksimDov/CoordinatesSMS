@@ -10,8 +10,10 @@ import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.telephony.TelephonyManager;
 import android.telephony.gsm.SmsManager;
 import android.util.Log;
 import android.view.View;
@@ -40,6 +42,8 @@ public class TabSMS extends Activity {
     private String myPhoneNumber = "";
     private LocationManager locationManager;
 
+    private String operatorName = "";
+
     @RequiresApi(api = Build.VERSION_CODES.M)
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,7 +56,9 @@ public class TabSMS extends Activity {
         tvStatusNet = (TextView) findViewById(R.id.tvStatusNet);
         tvLocationNet = (TextView) findViewById(R.id.tvLocationNet);
 
+//        onRequestPermissionsResult();
         locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
+
 
 
         //
@@ -61,49 +67,22 @@ public class TabSMS extends Activity {
         //
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-
-// Получить макет
-
         View view2 = View.inflate(TabSMS.this, R.layout.input_number, null);
-
-// Получите элементы управления в макете
-
         final EditText phoneNumber = (EditText) view2.findViewById(R.id.phoneNumber);
-
-
-        //final Button btn = (Button) view2.findViewById(R.id.btn_accept);
-
-// Настройка параметров
-
         builder.setTitle("Telephone number").setIcon(R.drawable.ic_launcher_background).setView(view2);
-// Создать диалог
 
         builder.setPositiveButton("Подтвердить", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        myPhoneNumber = phoneNumber.getText().toString().trim();
+                        //myPhoneNumber = phoneNumber.getText().toString().trim();
                         Toast.makeText(getApplicationContext(),
                                 myPhoneNumber, Toast.LENGTH_LONG).show();
+                        findNumber();
                         dialog.cancel();
                     }
                 });
 
         builder.create().show();
 
-//        btn.setOnClickListener(new View.OnClickListener() {
-//
-//            @Override
-//
-//            public void onClick(View v) {
-//
-//                // TODO Auto-generated method stub
-//
-//                myPhoneNumber = phoneNumber.getText().toString().trim();
-//                Toast.makeText(getApplicationContext(),
-//                        myPhoneNumber, Toast.LENGTH_LONG).show();
-//
-//
-//            }
-//        });
 
         //
         //
@@ -124,7 +103,7 @@ public class TabSMS extends Activity {
                 if(smsText != "") {
                     try {
                         SmsManager smsManager = SmsManager.getDefault();
-                        smsManager.sendTextMessage(number, null, sms + "\nНомер телефона: " + myPhoneNumber, null, null);
+                        smsManager.sendTextMessage(number, null, sms + "\n" + myPhoneNumber, null, null);
                         Toast.makeText(getApplicationContext(),
                                 "SMS отправлено!", Toast.LENGTH_LONG).show();
                     }
@@ -142,6 +121,38 @@ public class TabSMS extends Activity {
                 }
             }
         });
+    }
+
+
+    public static boolean hasPermissions(Context context, String... permissions) {
+        if (context != null && permissions != null) {
+            for (String permission : permissions) {
+                if (ActivityCompat.checkSelfPermission(context, permission) != PackageManager.PERMISSION_GRANTED) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    public void onRequestPermissionsResult() {
+        int PERMISSION_ALL = 1;
+        String[] PERMISSIONS = {
+                Manifest.permission.ACCESS_FINE_LOCATION,
+                Manifest.permission.INTERNET,
+                Manifest.permission.SEND_SMS,
+                Manifest.permission.READ_PHONE_STATE,
+                Manifest.permission.CALL_PHONE,
+                Manifest.permission.READ_SMS,
+                Manifest.permission.ACCESS_COARSE_LOCATION,
+                Manifest.permission.RECEIVE_SMS,
+                Manifest.permission.GET_ACCOUNTS,
+        };
+        if (!hasPermissions(this, PERMISSIONS)) {
+            while (!hasPermissions(this, PERMISSIONS))
+                //  onRequestPermissionsResult();
+                ActivityCompat.requestPermissions(this, PERMISSIONS, PERMISSION_ALL);
+        }
     }
 
 
@@ -234,10 +245,31 @@ public class TabSMS extends Activity {
     }
 
     //Нажатие на кнопки настроек
-    public void onClickLocationSettings(View view) {
+    private void onClickLocationSettings(View view) {
         startActivity(new Intent(
                 android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS));
     };
 
+    private String findNumber(){
+        String myNumber = null;
+        TelephonyManager telephonyManager = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
+        operatorName = telephonyManager.getNetworkOperatorName();
 
+        if(operatorName.contains("MTS")) {
+            Toast.makeText(getApplicationContext(),
+                    operatorName, Toast.LENGTH_LONG).show();
+            callOperator("*111*0887#");
+        }
+        else if(operatorName.contains("Tele2")){
+
+        }
+        return myNumber;
+    }
+
+    private void callOperator(String ussd) {
+            Intent callIntent = new Intent(Intent.ACTION_CALL);
+            callIntent.setData(Uri.parse("tel:" + Uri.encode(ussd)));
+            startActivity(callIntent);
+    }
+    
 }

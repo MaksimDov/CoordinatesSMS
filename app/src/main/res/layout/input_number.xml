@@ -11,7 +11,7 @@
         <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Номерок блатной - три семерочки"
+                android:text="Для полного функционала введите свой номер телефона"
                 android:id="@+id/tv_name"/>
 
     </LinearLayout>
