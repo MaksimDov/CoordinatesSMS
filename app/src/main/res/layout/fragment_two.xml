@@ -58,14 +58,7 @@
             android:layout_height="wrap_content"
             android:textSize="24sp">
     </TextView>
-    <Button
-            android:id="@+id/btnLocationSettings"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:onClick="onClickLocationSettings"
-            android:text="@string/location_settings">
-    </Button>
+
     <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"

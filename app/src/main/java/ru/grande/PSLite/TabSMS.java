@@ -39,7 +39,7 @@ public class TabSMS extends Activity {
     private Button shareIntent;
     private Button send;
     private String smsText = "";
-    private String myPhoneNumber = "";
+    private static String myPhoneNumber = "";
     private LocationManager locationManager;
 
     private String operatorName = "";
@@ -55,33 +55,41 @@ public class TabSMS extends Activity {
         tvEnabledNet = (TextView) findViewById(R.id.tvEnabledNet);
         tvStatusNet = (TextView) findViewById(R.id.tvStatusNet);
         tvLocationNet = (TextView) findViewById(R.id.tvLocationNet);
+        SmsReceiver smsReceiver = new SmsReceiver();
 
 //        onRequestPermissionsResult();
         locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
 
-
+        if(smsReceiver.getPhoneNumber() == "0"){
+            findNumber();
+        }
 
         //
         //
         //
         //
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        View view2 = View.inflate(TabSMS.this, R.layout.input_number, null);
-        final EditText phoneNumber = (EditText) view2.findViewById(R.id.phoneNumber);
-        builder.setTitle("Telephone number").setIcon(R.drawable.ic_launcher_background).setView(view2);
+//        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+//        View view2 = View.inflate(TabSMS.this, R.layout.input_number, null);
+//        final EditText phoneNumber = (EditText) view2.findViewById(R.id.phoneNumber);
+//        builder.setTitle("Telephone number").setIcon(R.drawable.ic_launcher_background).setView(view2);
+//
+//        builder.setPositiveButton("Подтвердить", new DialogInterface.OnClickListener() {
+//                    public void onClick(DialogInterface dialog, int id) {
+//                        //myPhoneNumber = phoneNumber.getText().toString().trim();
+//                        Toast.makeText(getApplicationContext(),
+//                                myPhoneNumber, Toast.LENGTH_LONG).show();
+//                        findNumber();
+//                        dialog.cancel();
+//                    }
+//                });
+//
+//        builder.create().show();
 
-        builder.setPositiveButton("Подтвердить", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        //myPhoneNumber = phoneNumber.getText().toString().trim();
-                        Toast.makeText(getApplicationContext(),
-                                myPhoneNumber, Toast.LENGTH_LONG).show();
-                        findNumber();
-                        dialog.cancel();
-                    }
-                });
 
-        builder.create().show();
+
+
+        /* Достаёт поле Номера, добавить в БД */
 
 
         //
@@ -95,29 +103,36 @@ public class TabSMS extends Activity {
         send.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                // Номер МЧС!!!!!!!!!!!
+
                 String number = "+79537699596";
+
+                // Номер МЧС!!!!!!!!!!!
+
                 String sms = smsText;
 
                 //С помощью SMS менеджера отправляем сообщение и высвечиваем
                 //Toast сообщение об успехе операции:
+
                 if(smsText != "") {
                     try {
                         SmsManager smsManager = SmsManager.getDefault();
-                        smsManager.sendTextMessage(number, null, sms + "\n" + myPhoneNumber, null, null);
+                        String stringToSMS = sms + "\n" + smsReceiver.getPhoneNumber();
+                        smsManager.sendTextMessage(number, null, stringToSMS, null, null);
                         Toast.makeText(getApplicationContext(),
                                 "SMS отправлено!", Toast.LENGTH_LONG).show();
                     }
                     //В случае фейла высвечиваем соответствующее сообщение:
                     catch (Exception e) {
                         Toast.makeText(getApplicationContext(),
-                                "SMS не отправлено, попытайтесь еще!", Toast.LENGTH_LONG).show();
+                               "SMS не отправлено, попытайтесь еще!", Toast.LENGTH_LONG).show();
                         e.printStackTrace();
                     }
                     smsText = "";
-                }
-                else{
+                } else{
                     Toast.makeText(getApplicationContext(),
-                            "SMS не отправлено, попытайтесь еще!", Toast.LENGTH_LONG).show();
+                           "SMS не отправлено, попытайтесь еще!", Toast.LENGTH_LONG).show();
                 }
             }
         });
@@ -254,7 +269,6 @@ public class TabSMS extends Activity {
         String myNumber = null;
         TelephonyManager telephonyManager = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
         operatorName = telephonyManager.getNetworkOperatorName();
-
         if(operatorName.contains("MTS")) {
             Toast.makeText(getApplicationContext(),
                     operatorName, Toast.LENGTH_LONG).show();
